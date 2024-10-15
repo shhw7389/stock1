@@ -1,4 +1,6 @@
 
+import datetime
+import json
 import requests
 import util
 
@@ -8,11 +10,19 @@ request_header = {
     'Accept': '*/*',
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2'}
 
+path_log='stockinfolog.txt'
+open(path_log,'a').close()
+existed=[line.split(maxsplit=1) for line in open(path_log)]
+existed={n1:n2 for n1,n2 in existed}
 
 ###股票数据接口
 # 获取单只个股最新的基本财务指标
 def stock_info(code):
     '''code输入股票代码或简称'''
+    date=str(datetime.datetime.now()).split()[0]
+    key=f'{code}-{date}-stockinfo'
+    if key in existed:
+        return json.loads(existed[key])
     stock_info_dict = {
         #'f57': '代码',
         #'f58': '名称',
@@ -41,5 +51,6 @@ def stock_info(code):
                                 headers=request_header,
                                 params=params).json()
     items = json_response['data']
+    with open(path_log,'a') as f_log:        f_log.write(key+' '+json.dumps(items)+'\n')
     return items
 
