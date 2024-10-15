@@ -93,7 +93,10 @@ def get_all_data(code):
                 f_kline.write(f'{n1} {n2}\n')
     f_log.write(uid+'\n')
     #注意，这里可能有重复的日期
-    return [line.split() for line in open(f'./candles/{code}.txt')]
+    l=[line.split() for line in open(f'./candles/{code}.txt')]
+    m={n1:n2 for n1,n2 in l}
+    return [m[date].split(',') for date in sorted(m.keys()) ]
+
 
 
 if __name__=='__main__':
