@@ -17,7 +17,7 @@ def gettop10holder(code):
     if key in existed:
         return json.loads(existed[key])
 
-    code_id=util.get_code_id(code) 
+    code_id=util.get_code_id(code)
     fields = {
         'GuDongDaiMa': '股东代码',
         'GuDongMingCheng': '股东名称',
@@ -50,8 +50,13 @@ def gettop10holder(code):
     url = 'https://emh5.eastmoney.com/api/GuBenGuDong/GetShiDaLiuTongGuDong'
     response = requests.post(url, json=data)
     response.encoding = 'utf-8'
-    o=response.json()
-    value=o['Result']['ShiDaLiuTongGuDongList']
+    try:
+        o=response.json()
+        value=o['Result']['ShiDaLiuTongGuDongList']
+    except:
+        print(response)
+        print(response.content)
+        raise
     with open(path_log,'a') as f_log:        f_log.write(key+' '+json.dumps(value)+'\n')
     return value
 if __name__=='__main__':
