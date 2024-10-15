@@ -15,3 +15,5 @@ log.txt 是脚本运行日志。
 
 codeid.txt 是脚本运行时产生的缓存数据，可以减少重复执行脚本时候对服务器的请求数目，里面主要存放历史行情数据。
 
+# Credit
+从 https://github.com/tkfy920/qstock 抄了不少API代码。
