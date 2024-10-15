@@ -8,7 +8,7 @@ pip install tqdm
 ```
 # 使用
 1. 打开dingyue.txt，设定搜索范围。
-2. 打开1.bat，在里面输入命令，
+2. 打开1.bat，在里面输入下面的命令执行脚本。
 ```
 python main.py
 ```
