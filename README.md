@@ -17,7 +17,7 @@ dingyue.txt 中放的是搜索股票的范围，我在里面预先放进去了�
 
 log.txt 是脚本运行日志。你可以随便看看，如果脚本出问题，我也需要检查这个日志。
 
-codeid.txt 是脚本运行时产生的缓存数据，可以减少重复执行脚本时候对服务器的请求数目，里面主要存放历史行情数据。
+codeid.txt synctime.txt candlelog.txt以及candles目录是脚本运行时产生的缓存数据，可以减少重复执行脚本时候对服务器的请求数目，里面存放历史行情数据。
 
 # Credit
 从 https://github.com/tkfy920/qstock 抄了不少API代码。
