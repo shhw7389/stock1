@@ -17,8 +17,7 @@ def gettop10holder(code):
     if key in existed:
         return json.loads(existed[key])
 
-    code_id=util.get_code_id(code)
-    num=2
+    code_id=util.get_code_id(code) 
     fields = {
         'GuDongDaiMa': '股东代码',
         'GuDongMingCheng': '股东名称',
