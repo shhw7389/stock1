@@ -3,8 +3,20 @@
 import re
 import requests
 import util
+import datetime
+import json
+
+path_log='top10log.txt'
+open(path_log,'a').close()
+existed=[line.split(maxsplit=1) for line in open(path_log)]
+existed={n1:n2 for n1,n2 in existed}
 
 def gettop10holder(code):
+    date=str(datetime.datetime.now()).split()[0]
+    key=f'{code}-{date}-top10'
+    if key in existed:
+        return json.loads(existed[key])
+
     code_id=util.get_code_id(code)
     num=2
     fields = {
@@ -22,6 +34,9 @@ def gettop10holder(code):
     url0 = 'https://emh5.eastmoney.com/api/GuBenGuDong/GetFirstRequest2Data'
     res = requests.post(url0, json=data0).content #.json()
     l=re.findall(b'"BaoGaoQi":"(\\d\\d\\d\\d-\\d\\d-\\d\\d)"',res)
+    if len(l)<1:
+        print(res)
+        raise
     date=sorted(l)[-1].decode()
 
     #print(res)
@@ -37,7 +52,9 @@ def gettop10holder(code):
     response = requests.post(url, json=data)
     response.encoding = 'utf-8'
     o=response.json()
-    return o['Result']['ShiDaLiuTongGuDongList']
+    value=o['Result']['ShiDaLiuTongGuDongList']
+    with open(path_log,'a') as f_log:        f_log.write(key+' '+json.dumps(value)+'\n')
+    return value
 if __name__=='__main__':
     o=gettop10holder('600415')
     print(o)
