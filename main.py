@@ -1,6 +1,7 @@
 
 import datetime
 import top10 #前10股东
+import time
 import stockinfo #流通市值
 import stockrealtime #实时价格
 import candle #历史数据
@@ -17,8 +18,9 @@ dingyu=sorted({n for n in dingyu if len(n)>0})
 #日志记录
 f_log=open('log.txt','a')
 
-list1=[]
-for code in tqdm(dingyu,"搜索条件一三四"):
+for code in tqdm(dingyu,"搜索"):
+    #每次请求间隔10秒，避免被服务器拉入黑名单
+    time.sleep(10)
 
     #条件四：4十大股东持股总计超过40%。
     holders=top10.gettop10holder(code)
@@ -47,10 +49,6 @@ for code in tqdm(dingyu,"搜索条件一三四"):
     f_log.write(f'{datetime.datetime.now()} 之后的历史最低: {code} {min_}\n')
     #逻辑判断
     if min_>max_*0.1:continue
-
-    list1.append(code)
-    
-for code in tqdm(list1,"搜索条件二"):
 
     #条件二：股价目前在250均线之上。
     o=stockrealtime.stock_realtime([code])[0]
